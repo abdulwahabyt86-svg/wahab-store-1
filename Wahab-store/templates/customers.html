@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Customers - Wahab Store</title>
+
+<link rel="stylesheet"
+      href="/statics/style.css">
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+
+<header class="header">
+
+    <div class="logo">
+
+        <i class="fa-solid fa-users"></i>
+
+        <span>Wahab<span>Customers</span></span>
+
+    </div>
+
+</header>
+
+
+<section class="page-header">
+
+    <h1>👥 Customer List</h1>
+
+    <p>
+        Wahab Store customers
+    </p>
+
+</section>
+
+
+<section class="page-container">
+
+    <a href="admin.html"
+       class="page-back">
+
+        <i class="fa-solid fa-arrow-left"></i>
+
+        Back to Admin Panel
+
+    </a>
+
+
+    <div class="record-box">
+
+        <table class="record-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>#</th>
+
+                    <th>Customer Name</th>
+
+                    <th>Phone</th>
+
+                    <th>Total Orders</th>
+
+                    <th>Joined</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="customersTable">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+<script>
+
+const customers =
+    JSON.parse(
+        localStorage.getItem("wahabCustomers")
+    ) || [];
+
+
+const table =
+    document.getElementById("customersTable");
+
+
+if (customers.length === 0) {
+
+    table.innerHTML = `
+        <tr>
+
+            <td colspan="5"
+                style="text-align:center;padding:40px">
+
+                No customers yet.
+
+                <br><br>
+
+                Customers will appear here
+                after they place an order.
+
+            </td>
+
+        </tr>
+    `;
+
+} else {
+
+    customers.forEach(function(customer,index) {
+
+        table.innerHTML += `
+
+            <tr>
+
+                <td>
+                    ${index + 1}
+                </td>
+
+                <td>
+                    <strong>
+                        ${customer.name}
+                    </strong>
+                </td>
+
+                <td>
+                    ${customer.phone}
+                </td>
+
+                <td>
+                    ${customer.orders}
+                </td>
+
+                <td>
+                    ${customer.joined}
+                </td>
+
+            </tr>
+
+        `;
+
+    });
+
+}
+
+</script>
+
+
+</body>
+</html>

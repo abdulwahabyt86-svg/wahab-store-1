@@ -1,0 +1,509 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Favourites - Wahab Store</title>
+
+    <link rel="stylesheet"
+          href="/statics/style.css">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header class="header">
+
+    <div class="logo">
+
+        <i class="fa-solid fa-bag-shopping"></i>
+
+        <span>
+            Wahab<span>Store</span>
+        </span>
+
+    </div>
+
+
+    <div class="header-icons">
+
+        <div class="header-icon"
+             onclick="window.location.href='favourites.html'">
+
+            <i class="fa-solid fa-heart"></i>
+
+            <b id="favoriteCount">0</b>
+
+            <span>Wishlist</span>
+
+        </div>
+
+
+        <div class="header-icon"
+             onclick="window.location.href='index.html'">
+
+            <i class="fa-solid fa-store"></i>
+
+            <span>Store</span>
+
+        </div>
+
+
+        <div class="header-icon"
+             onclick="openAdmin()">
+
+            <i class="fa-solid fa-user-shield"></i>
+
+            <span>Admin</span>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- ================= PAGE HEADER ================= -->
+
+<section class="page-header">
+
+    <h1>
+        <i class="fa-solid fa-heart"></i>
+        My Favourites
+    </h1>
+
+    <p>
+        Products you selected as favourites
+    </p>
+
+</section>
+
+
+<!-- ================= FAVOURITES ================= -->
+
+<section class="page-container">
+
+    <a href="index.html"
+       class="page-back">
+
+        <i class="fa-solid fa-arrow-left"></i>
+
+        Back to Store
+
+    </a>
+
+
+    <div id="favoriteContainer"
+         class="vertical-products">
+
+    </div>
+
+</section>
+
+
+<script src="/statics/script.js"></script>
+
+
+<script>
+
+/* =========================================================
+   DISPLAY FAVOURITES
+   ========================================================= */
+
+function displayFavorites() {
+
+    const container =
+        document.getElementById(
+            "favoriteContainer"
+        );
+
+
+    if (!container) {
+        return;
+    }
+
+
+    /* IMPORTANT:
+       Use the SAME storage name as script.js
+    */
+
+    const favorites =
+        JSON.parse(
+            localStorage.getItem(
+                "wahabWishlist"
+            )
+        ) || [];
+
+
+    /* Update count */
+
+    const count =
+        document.getElementById(
+            "favoriteCount"
+        );
+
+
+    if (count) {
+
+        count.textContent =
+            favorites.length;
+
+    }
+
+
+    /* =====================================================
+       EMPTY
+       ===================================================== */
+
+    if (favorites.length === 0) {
+
+        container.innerHTML = `
+
+            <div class="favorite-empty">
+
+                <div class="favorite-empty-icon">
+
+                    <i class="fa-regular fa-heart"></i>
+
+                </div>
+
+                <h2>
+                    No Favourite Products Yet
+                </h2>
+
+                <p>
+                    Click the heart icon on any product
+                    to add it here.
+                </p>
+
+                <a
+                    href="index.html"
+                    class="favorite-shop-button"
+                >
+
+                    <i class="fa-solid fa-bag-shopping"></i>
+
+                    Start Shopping
+
+                </a>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    /* Clear old content */
+
+    container.innerHTML = "";
+
+
+    /* =====================================================
+       DISPLAY FAVOURITES
+       ===================================================== */
+
+    favorites.forEach(function(item, index) {
+
+
+        const category =
+            item.category || "Other";
+
+
+        const name =
+            item.name || "Unnamed Product";
+
+
+        const price =
+            Number(item.price) || 0;
+
+
+        const image =
+            item.image || "";
+
+
+        /* Category icon */
+
+        let icon =
+            "fa-box-open";
+
+
+        if (
+            category.toLowerCase() ===
+            "gaming"
+        ) {
+
+            icon =
+                "fa-gamepad";
+
+        }
+
+
+        if (
+            category.toLowerCase() ===
+            "fashion"
+        ) {
+
+            icon =
+                "fa-shirt";
+
+        }
+
+
+        if (
+            category.toLowerCase() ===
+            "home"
+        ) {
+
+            icon =
+                "fa-house";
+
+        }
+
+
+        if (
+            category.toLowerCase() ===
+            "beauty"
+        ) {
+
+            icon =
+                "fa-spray-can-sparkles";
+
+        }
+
+
+        if (
+            category.toLowerCase() ===
+            "electronics"
+        ) {
+
+            icon =
+                "fa-mobile-screen-button";
+
+        }
+
+
+        /* =================================================
+           PRODUCT IMAGE
+           ================================================= */
+
+        let imageHTML;
+
+
+        if (image.trim() !== "") {
+
+            imageHTML = `
+
+                <img
+                    src="${escapeHTML(image)}"
+                    alt="${escapeHTML(name)}"
+                    class="favorite-product-img"
+
+                    onerror="
+                        this.style.display='none';
+                        this.nextElementSibling.style.display='flex';
+                    "
+                >
+
+                <div
+                    class="favorite-image-fallback"
+                    style="display:none;"
+                >
+
+                    <i class="fa-solid ${icon}"></i>
+
+                </div>
+
+            `;
+
+        } else {
+
+            imageHTML = `
+
+                <div class="favorite-image-fallback">
+
+                    <i class="fa-solid ${icon}"></i>
+
+                </div>
+
+            `;
+
+        }
+
+
+        /* =================================================
+           CREATE PRODUCT
+           ================================================= */
+
+        const div =
+            document.createElement(
+                "div"
+            );
+
+
+        div.className =
+            "vertical-product";
+
+
+        div.innerHTML = `
+
+            <!-- PRODUCT IMAGE -->
+
+            <div class="product-image favorite-product-image">
+
+                ${imageHTML}
+
+            </div>
+
+
+            <!-- PRODUCT INFORMATION -->
+
+            <div class="vertical-product-info">
+
+                <small>
+
+                    <i class="fa-solid ${icon}"></i>
+
+                    ${escapeHTML(category)}
+
+                </small>
+
+
+                <h2>
+                    ${escapeHTML(name)}
+                </h2>
+
+
+                <div class="favorite-rating">
+
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+
+                </div>
+
+
+                <strong>
+                    Rs. ${price.toLocaleString()}
+                </strong>
+
+
+                <div class="favorite-actions">
+
+                    <button
+                        class="favorite-cart-button"
+                        onclick="addToCartById('${escapeHTML(String(item.id || ""))}')"
+                    >
+
+                        <i class="fa-solid fa-cart-plus"></i>
+
+                        Add to Cart
+
+                    </button>
+
+
+                    <button
+                        class="favorite-remove-button"
+                        onclick="removeFavorite(${index})"
+                        title="Remove from favourites"
+                    >
+
+                        <i class="fa-solid fa-trash"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        `;
+
+
+        container.appendChild(
+            div
+        );
+
+    });
+
+}
+
+
+/* =========================================================
+   REMOVE FAVOURITE
+   ========================================================= */
+
+function removeFavorite(index) {
+
+    const favorites =
+        JSON.parse(
+            localStorage.getItem(
+                "wahabWishlist"
+            )
+        ) || [];
+
+
+    if (
+        index < 0 ||
+        index >= favorites.length
+    ) {
+
+        return;
+
+    }
+
+
+    favorites.splice(
+        index,
+        1
+    );
+
+
+    localStorage.setItem(
+        "wahabWishlist",
+        JSON.stringify(favorites)
+    );
+
+
+    updateFavoriteCount();
+
+
+    displayFavorites();
+
+
+    showNotification(
+        "Product removed from favourites.",
+        "success"
+    );
+
+}
+
+
+/* =========================================================
+   LOAD FAVOURITES
+   ========================================================= */
+
+displayFavorites();
+
+</script>
+
+</body>
+</html>
+```
+
+

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Orders - Wahab Store</title>
+
+<link rel="stylesheet"
+      href="/statics/style.css">
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+
+<header class="header">
+
+    <div class="logo">
+
+        <i class="fa-solid fa-box-open"></i>
+
+        <span>Wahab<span>Orders</span></span>
+
+    </div>
+
+</header>
+
+
+<section class="page-header">
+
+    <h1>📦 Order Records</h1>
+
+    <p>
+        All orders placed through Wahab Store
+    </p>
+
+</section>
+
+
+<section class="page-container">
+
+    <a href="admin.html"
+       class="page-back">
+
+        <i class="fa-solid fa-arrow-left"></i>
+
+        Back to Admin Panel
+
+    </a>
+
+
+    <div class="record-box">
+
+        <table class="record-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>Order ID</th>
+
+                    <th>Customer</th>
+
+                    <th>Phone</th>
+
+                    <th>Products</th>
+
+                    <th>Total</th>
+
+                    <th>Date</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="ordersTable">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+<script>
+
+const orders =
+    JSON.parse(
+        localStorage.getItem("wahabOrders")
+    ) || [];
+
+
+const table =
+    document.getElementById("ordersTable");
+
+
+if (orders.length === 0) {
+
+    table.innerHTML = `
+        <tr>
+            <td colspan="6"
+                style="text-align:center;padding:40px">
+
+                No orders have been placed yet.
+
+            </td>
+        </tr>
+    `;
+
+} else {
+
+    orders.forEach(function(order) {
+
+        let productList = "";
+
+        order.items.forEach(function(item) {
+
+            productList +=
+                item.name +
+                " × " +
+                item.quantity +
+                "<br>";
+
+        });
+
+
+        table.innerHTML += `
+
+            <tr>
+
+                <td>
+                    ${order.id}
+                </td>
+
+                <td>
+                    ${order.customer}
+                </td>
+
+                <td>
+                    ${order.phone}
+                </td>
+
+                <td>
+                    ${productList}
+                </td>
+
+                <td>
+                    Rs. ${Number(order.total).toLocaleString()}
+                </td>
+
+                <td>
+                    ${order.date}
+                </td>
+
+            </tr>
+
+        `;
+
+    });
+
+}
+
+</script>
+
+
+</body>
+</html>

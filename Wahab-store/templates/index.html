@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wahab Store</title>
+
+    <link rel="stylesheet" href="/statics/style.css">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header class="header">
+
+    <div class="logo">
+        <i class="fa-solid fa-bag-shopping"></i>
+        <span>Wahab<span>Store</span></span>
+    </div>
+
+    <div class="search-box">
+
+    <input
+        type="text"
+        id="searchInput"
+        placeholder="Search products..."
+        autocomplete="off"
+    >
+
+    <button
+        type="button"
+        id="searchButton">
+        <i class="fa-solid fa-magnifying-glass"></i>
+    </button>
+
+</div>
+
+    <div class="header-icons">
+
+        <!-- CART -->
+        <div class="header-icon" onclick="goToCart()">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <b id="cartCount">0</b>
+            <span>Cart</span>
+        </div>
+
+
+        <!-- WISHLIST -->
+        <div class="header-icon" onclick="goToFavorites()">
+            <i class="fa-solid fa-heart"></i>
+            <b id="favoriteCount">0</b>
+            <span>Wishlist</span>
+        </div>
+
+
+        <!-- ADMIN -->
+        <div class="header-icon"
+             onclick="window.location.href='admin-login.html'">
+
+            <i class="fa-solid fa-user-shield"></i>
+
+            <span>Admin</span>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- ================= NAVIGATION ================= -->
+
+<nav class="navbar">
+
+    <a href="#home">
+        <i class="fa-solid fa-house"></i>
+        Home
+    </a>
+
+    <a href="#categories">
+        <i class="fa-solid fa-list"></i>
+        Categories
+    </a>
+
+    <a href="#products" onclick="goToProducts()">
+        <i class="fa-solid fa-fire"></i>
+        Flash Sale
+    </a>
+
+    <a href="#products" onclick="showAllProducts()">
+        <i class="fa-solid fa-star"></i>
+        Best Sellers
+    </a>
+
+    <a href="admin-login.html">
+        Admin Panel
+    </a>
+
+    <a href="javascript:void(0)" onclick="showContact()">
+        <i class="fa-solid fa-phone"></i>
+        Contact
+    </a>
+
+</nav>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero" id="home">
+
+    <div class="hero-content">
+
+        <p class="small-title">WELCOME TO</p>
+
+        <h1>
+            WAHAB
+            <span>STORE</span>
+        </h1>
+
+        <h2>
+            Everything You Need
+            <br>
+            In One Place
+        </h2>
+
+        <p class="hero-text">
+            Discover amazing products at affordable prices.
+            Shop easily and enjoy your Wahab Store experience.
+        </p>
+
+        <button class="shop-btn" onclick="goToProducts()">
+            Shop Now
+            <i class="fa-solid fa-arrow-right"></i>
+        </button>
+
+    </div>
+
+    <div class="hero-decoration">
+        <i class="fa-solid fa-bag-shopping"></i>
+    </div>
+
+</section>
+
+
+<!-- ================= CATEGORIES ================= -->
+
+<section class="section" id="categories">
+
+    <div class="section-title">
+
+        <p>EXPLORE</p>
+
+        <h2>Popular Categories</h2>
+
+    </div>
+
+
+    <div class="categories">
+
+        <div class="category"
+             onclick="filterCategory('Electronics')">
+
+            <div class="category-icon">
+                <i class="fa-solid fa-mobile-screen-button"></i>
+            </div>
+
+            <h3>Electronics</h3>
+
+            <p>Phones & Gadgets</p>
+
+        </div>
+
+
+        <div class="category"
+             onclick="filterCategory('Fashion')">
+
+            <div class="category-icon">
+                <i class="fa-solid fa-shirt"></i>
+            </div>
+
+            <h3>Fashion</h3>
+
+            <p>Clothes & Style</p>
+
+        </div>
+
+
+        <div class="category"
+             onclick="filterCategory('Gaming')">
+
+            <div class="category-icon">
+                <i class="fa-solid fa-gamepad"></i>
+            </div>
+
+            <h3>Gaming</h3>
+
+            <p>Gaming Products</p>
+
+        </div>
+
+
+        <div class="category"
+             onclick="filterCategory('Home')">
+
+            <div class="category-icon">
+                <i class="fa-solid fa-house"></i>
+            </div>
+
+            <h3>Home</h3>
+
+            <p>Home Accessories</p>
+
+        </div>
+
+
+        <div class="category"
+             onclick="filterCategory('Beauty')">
+
+            <div class="category-icon">
+                <i class="fa-solid fa-spray-can-sparkles"></i>
+            </div>
+
+            <h3>Beauty</h3>
+
+            <p>Beauty Products</p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FLASH SALE ================= -->
+
+<section class="products-section" id="products">
+
+    <div class="section-title">
+
+        <p>DON'T MISS OUT</p>
+
+        <h2>🔥 Flash Sale</h2>
+
+        <button class="view-all"
+                onclick="openProductsPage()">
+
+            View More
+
+        </button>
+
+    </div>
+
+
+    <div class="products" id="productContainer">
+
+        <!-- Products are loaded from Admin Panel -->
+
+    </div>
+
+</section>
+
+
+<!-- ================= PROMO ================= -->
+
+<section class="promo">
+
+    <div>
+
+        <p>WAHAB STORE EXCLUSIVE</p>
+
+        <h2>
+            Quality Products.
+            <br>
+            Amazing Prices.
+        </h2>
+
+        <button onclick="window.location.href='./explor.html'">
+            Explore Products
+        </button>
+
+    </div>
+
+    <i class="fa-solid fa-gift promo-gift"></i>
+
+</section>
+
+
+<!-- ================= CART OVERLAY ================= -->
+
+<div class="cart-overlay"
+     id="cartOverlay"
+     onclick="closeCart()">
+</div>
+
+
+<!-- ================= CART ================= -->
+
+<div class="cart-panel"
+     id="cartPanel">
+
+    <div class="cart-header">
+
+        <h2>
+            <i class="fa-solid fa-cart-shopping"></i>
+            Your Cart
+        </h2>
+
+        <button onclick="closeCart()">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+    </div>
+
+
+    <div id="cartItems"
+         class="cart-items">
+
+        <p class="empty-cart">
+            Your cart is empty.
+        </p>
+
+    </div>
+
+
+    <div class="cart-bottom">
+
+        <div>
+
+            <span>Total:</span>
+
+            <strong id="cartTotal">
+                Rs. 0
+            </strong>
+
+        </div>
+
+        <button onclick="checkout()">
+            Checkout
+            <i class="fa-solid fa-arrow-right"></i>
+        </button>
+
+    </div>
+
+</div>
+
+<!-- ================= ORDER NOW ================= -->
+
+<div class="order-popup" id="orderPopup">
+
+    <div class="order-box">
+
+        <button
+            class="order-close"
+            onclick="closeOrderForm()"
+        >
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <h2>
+            <i class="fa-solid fa-bolt"></i>
+            Order Now
+        </h2>
+
+        <p>
+            Enter your details to place your order.
+        </p>
+
+        <div
+            id="orderProductInfo"
+            class="order-product-info">
+        </div>
+
+        <form
+            id="orderForm"
+            onsubmit="placeOrder(event)"
+        >
+
+            <input
+                type="text"
+                id="customerName"
+                placeholder="Your Full Name"
+                required
+            >
+
+            <input
+                type="tel"
+                id="customerPhone"
+                placeholder="Phone Number"
+                required
+            >
+
+            <input
+                type="text"
+                id="customerAddress"
+                placeholder="Complete Address"
+                required
+            >
+
+            <input
+                type="text"
+                id="customerCity"
+                placeholder="City"
+                required
+            >
+
+            <input
+                type="number"
+                id="orderQuantity"
+                value="1"
+                min="1"
+                required
+            >
+
+            <button
+                type="submit"
+                class="confirm-order-btn"
+            >
+
+                <i class="fa-solid fa-check"></i>
+
+                Confirm Order
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<!-- ================= CONTACT ================= -->
+
+<div class="contact-popup"
+     id="contactPopup">
+
+    <div class="contact-box">
+
+        <button class="popup-x"
+                onclick="closeContact()">
+
+            <i class="fa-solid fa-xmark"></i>
+
+        </button>
+
+
+        <i class="fa-solid fa-phone contact-icon"></i>
+
+
+        <h2>
+            Contact Wahab Store 🌹
+        </h2>
+
+
+        <p>
+            For orders, questions or customer support,
+            contact us at:
+            Full Trusted Dealer 
+            <h2>--Abdul Wahab 😎--</h2>
+        </p>
+
+
+        <div class="contact-number">
+            🤞 03147302804
+        </div>
+
+
+        <button class="contact-close"
+                onclick="closeContact()">
+
+            Close
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <div class="footer-logo">
+
+        <i class="fa-solid fa-bag-shopping"></i>
+
+        Wahab<span>Store</span>
+
+    </div>
+
+
+    <p>
+        Your trusted online shopping store.
+        Shop smart. Shop easy. Shop Wahab Store.
+    </p>
+
+
+    <div class="socials">
+
+        <a href="#">
+            <i class="fa-brands fa-facebook-f"></i>
+        </a>
+
+        <a href="#">
+            <i class="fa-brands fa-instagram"></i>
+        </a>
+
+        <a href="#">
+            <i class="fa-brands fa-tiktok"></i>
+        </a>
+
+        <a href="#">
+            <i class="fa-brands fa-whatsapp"></i>
+        </a>
+
+    </div>
+
+
+    <div class="copyright">
+
+        © 2026 Wahab Store 😎. All Rights Reserved.
+
+    </div>
+
+</footer>
+
+
+<!-- ================= SCRIPT ================= -->
+
+<script src="/statics/script.js"></script>
+
+</body>
+</html>
