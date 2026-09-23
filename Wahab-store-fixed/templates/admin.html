@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin Panel - Wahab Store</title>
+
+<link rel="stylesheet" href="/statics/style.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+.product-manager {
+    margin-top: 40px;
+    padding: 30px;
+    background: #111;
+    border-radius: 20px;
+}
+
+.product-manager h2 {
+    color: #ffc107;
+    margin-bottom: 25px;
+}
+
+.product-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.product-form input,
+.product-form select {
+    padding: 14px;
+    background: #222;
+    color: white;
+    border: 1px solid #555;
+    border-radius: 8px;
+    outline: none;
+}
+
+.product-form input:focus,
+.product-form select:focus {
+    border-color: #ffc107;
+}
+
+
+/* =========================================================
+   IMAGE FILE INPUT
+   ========================================================= */
+
+.image-file-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.image-file-wrapper input[type="file"] {
+    width: 100%;
+    padding: 11px;
+    background: #222;
+    color: white;
+    border: 1px solid #555;
+    border-radius: 8px;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.image-file-wrapper input[type="file"]:hover {
+    border-color: #ffc107;
+}
+
+.image-file-wrapper input[type="file"]::file-selector-button {
+    background: #ffc107;
+    color: #111;
+    border: none;
+    padding: 9px 15px;
+    margin-right: 10px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.image-file-wrapper input[type="file"]::file-selector-button:hover {
+    background: #ffca28;
+}
+
+
+/* Selected image name */
+
+.selected-image-name {
+    display: block;
+    color: #aaa;
+    font-size: 13px;
+    margin-top: 6px;
+}
+
+
+.product-form button {
+    grid-column: span 2;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    background: #ffc107;
+    color: #111;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.product-form button:hover {
+    background: #ffca28;
+}
+
+.cancel-btn {
+    display: none;
+    background: #555 !important;
+    color: white !important;
+}
+
+.product-list {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.admin-product {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 18px;
+    background: #1d1d1d;
+    border: 1px solid #333;
+    border-radius: 12px;
+}
+
+.admin-product-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 10px;
+    background: #333;
+}
+
+.admin-product-info {
+    flex: 1;
+}
+
+.admin-product-info h3 {
+    color: white;
+    margin-bottom: 8px;
+}
+
+.admin-product-info p {
+    color: #aaa;
+    margin: 4px 0;
+}
+
+.product-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.edit-btn,
+.delete-btn {
+    padding: 11px 15px;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.edit-btn {
+    background: #2196f3;
+    color: white;
+}
+
+.delete-btn {
+    background: #e53935;
+    color: white;
+}
+
+.edit-btn:hover {
+    background: #1976d2;
+}
+
+.delete-btn:hover {
+    background: #c62828;
+}
+
+.empty-products {
+    text-align: center;
+    color: #aaa;
+    padding: 30px;
+}
+
+.store-notification {
+    position: fixed;
+    top: 25px;
+    right: 25px;
+    z-index: 99999;
+    background: #1f1f1f;
+    color: white;
+    padding: 16px 22px;
+    border-radius: 10px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.4);
+    border-left: 5px solid #ffc107;
+    font-weight: bold;
+}
+
+
+@media(max-width:700px) {
+
+    .product-form {
+        grid-template-columns: 1fr;
+    }
+
+    .product-form button {
+        grid-column: span 1;
+    }
+
+    .admin-product {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .product-actions {
+        justify-content: center;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<header class="header">
+
+    <div class="logo">
+
+        <i class="fa-solid fa-user-shield"></i>
+
+        <span>Wahab<span>Admin</span></span>
+
+    </div>
+
+    <div class="header-icons">
+
+        <div class="header-icon"
+             onclick="window.location.href='index.html'">
+
+            <i class="fa-solid fa-store"></i>
+
+            <span>Store</span>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+
+<section class="page-header">
+
+    <h1>👨‍💼 Admin Panel</h1>
+
+    <p>Manage your Wahab Store</p>
+
+</section>
+
+
+
+<section class="page-container">
+
+    <div class="admin-grid">
+
+
+        <!-- ORDERS -->
+
+        <div class="admin-card"
+             onclick="window.location.href='orders.html'">
+
+            <i class="fa-solid fa-box-open"></i>
+
+            <h2>Orders</h2>
+
+            <p>View all customer orders</p>
+
+        </div>
+
+
+
+        <!-- CUSTOMERS -->
+
+        <div class="admin-card"
+             onclick="window.location.href='customers.html'">
+
+            <i class="fa-solid fa-users"></i>
+
+            <h2>Customers</h2>
+
+            <p>View customer names</p>
+
+        </div>
+
+
+
+        <!-- PRODUCTS -->
+
+        <div class="admin-card"
+             onclick="window.location.href='products.html'">
+
+            <i class="fa-solid fa-boxes-stacked"></i>
+
+            <h2>Products</h2>
+
+            <p>View all products</p>
+
+        </div>
+
+
+
+        <!-- ADD PRODUCTS -->
+
+        <div class="admin-card"
+             onclick="openProductManager()">
+
+            <i class="fa-solid fa-circle-plus"></i>
+
+            <h2>Add Products</h2>
+
+            <p>Add new products</p>
+
+        </div>
+
+
+
+        <!-- EDIT PRODUCTS -->
+
+        <div class="admin-card"
+             onclick="openProductManager()">
+
+            <i class="fa-solid fa-pen-to-square"></i>
+
+            <h2>Edit Products</h2>
+
+            <p>Edit or remove products</p>
+
+        </div>
+
+
+
+        <!-- FAVOURITES -->
+
+        <div class="admin-card"
+             onclick="window.location.href='favourites.html'">
+
+            <i class="fa-solid fa-heart"></i>
+
+            <h2>Favourites</h2>
+
+            <p>View favourite products</p>
+
+        </div>
+
+
+
+        <!-- STORE -->
+
+        <div class="admin-card"
+             onclick="window.location.href='index.html'">
+
+            <i class="fa-solid fa-store"></i>
+
+            <h2>Open Store</h2>
+
+            <p>Return to Wahab Store</p>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- PRODUCT MANAGER -->
+
+    <div class="product-manager"
+         id="productManager"
+         style="display:none;">
+
+        <h2>
+
+            <i class="fa-solid fa-box"></i>
+
+            Product Management
+
+        </h2>
+
+
+        <form class="product-form"
+              onsubmit="saveProduct(event)">
+
+
+            <!-- PRODUCT NAME -->
+
+            <input
+                type="text"
+                id="productName"
+                placeholder="Product Name"
+                required
+            >
+
+
+            <!-- PRICE -->
+
+            <input
+                type="number"
+                id="productPrice"
+                placeholder="Price"
+                min="1"
+                required
+            >
+
+
+            <!-- CATEGORY -->
+
+            <select id="productCategory" required>
+
+                <option value="">
+                    Select Category
+                </option>
+
+                <option value="Electronics">
+                    Electronics
+                </option>
+
+                <option value="Fashion">
+                    Fashion
+                </option>
+
+                <option value="Gaming">
+                    Gaming
+                </option>
+
+                <option value="Home">
+                    Home
+                </option>
+
+                <option value="Beauty">
+                    Beauty
+                </option>
+
+            </select>
+
+
+            <!-- CHOOSE IMAGE -->
+
+            <div class="image-file-wrapper">
+
+                <input
+                    type="file"
+                    id="productImage"
+                    accept="image/*"
+                >
+
+                <span
+                    id="selectedImageName"
+                    class="selected-image-name"
+                >
+                    No image selected
+                </span>
+
+            </div>
+
+
+            <!-- ADD / UPDATE -->
+
+            <button type="submit"
+                    id="saveButton">
+
+                <i class="fa-solid fa-plus"></i>
+
+                Add Product
+
+            </button>
+
+
+            <!-- CANCEL -->
+
+            <button type="button"
+                    class="cancel-btn"
+                    id="cancelButton"
+                    onclick="cancelEdit()">
+
+                Cancel Edit
+
+            </button>
+
+        </form>
+
+
+
+        <div class="product-list"
+             id="productList">
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<script>
+
+/* ==========================================
+   SHARED SERVER PRODUCT DATABASE
+========================================== */
+
+let products = [];
+let editingIndex = -1;
+let editingImage = "";
+
+
+/* ==========================================
+   LOAD PRODUCTS FROM SERVER
+========================================== */
+
+async function loadProducts() {
+
+    try {
+
+        const response = await fetch("/api/products", {
+            cache: "no-store"
+        });
+
+        if (!response.ok) {
+            throw new Error("Could not load products.");
+        }
+
+        const data = await response.json();
+
+        products = Array.isArray(data) ? data : [];
+
+        localStorage.setItem(
+            "wahabProducts",
+            JSON.stringify(products)
+        );
+
+    } catch (error) {
+
+        console.error(error);
+
+        try {
+            products =
+                JSON.parse(
+                    localStorage.getItem("wahabProducts")
+                ) || [];
+        } catch (e) {
+            products = [];
+        }
+
+        if (!Array.isArray(products)) {
+            products = [];
+        }
+
+        showNotification(
+            "⚠️ Server products could not be loaded. Please refresh and try again."
+        );
+
+    }
+
+    displayProducts();
+
+}
+
+
+/* ==========================================
+   IMAGE FILE NAME DISPLAY
+========================================== */
+
+document
+.getElementById("productImage")
+.addEventListener("change", function() {
+
+    const file = this.files[0];
+
+    const imageName =
+        document.getElementById("selectedImageName");
+
+    if (file) {
+        imageName.textContent = "Selected: " + file.name;
+    } else {
+        imageName.textContent = "No image selected";
+    }
+
+});
+
+
+/* ==========================================
+   OPEN PRODUCT MANAGER
+========================================== */
+
+function openProductManager() {
+
+    const manager =
+        document.getElementById("productManager");
+
+    manager.style.display = "block";
+
+    manager.scrollIntoView({
+        behavior: "smooth"
+    });
+
+    displayProducts();
+
+}
+
+
+/* ==========================================
+   NOTIFICATION
+========================================== */
+
+function showNotification(message) {
+
+    const old =
+        document.querySelector(".store-notification");
+
+    if (old) {
+        old.remove();
+    }
+
+    const notification =
+        document.createElement("div");
+
+    notification.className =
+        "store-notification";
+
+    notification.innerHTML =
+        message;
+
+    document.body.appendChild(notification);
+
+    setTimeout(function() {
+        notification.remove();
+    }, 3000);
+
+}
+
+
+/* ==========================================
+   ADD / UPDATE PRODUCT
+========================================== */
+
+async function saveProduct(event) {
+
+    event.preventDefault();
+
+    const name =
+        document.getElementById("productName").value.trim();
+
+    const price =
+        Number(document.getElementById("productPrice").value);
+
+    const category =
+        document.getElementById("productCategory").value;
+
+    const imageInput =
+        document.getElementById("productImage");
+
+    const selectedFile =
+        imageInput.files[0];
+
+    if (!name || !price || !category) {
+
+        showNotification(
+            "❌ Please fill all required fields."
+        );
+
+        return;
+
+    }
+
+    if (editingIndex !== -1 && !selectedFile) {
+
+        await saveProductData(
+            name,
+            price,
+            category,
+            editingImage
+        );
+
+        return;
+
+    }
+
+    if (selectedFile) {
+
+        const reader =
+            new FileReader();
+
+        reader.onload = async function(event) {
+
+            await saveProductData(
+                name,
+                price,
+                category,
+                event.target.result
+            );
+
+        };
+
+        reader.onerror = function() {
+
+            showNotification(
+                "❌ Could not read the selected image."
+            );
+
+        };
+
+        reader.readAsDataURL(selectedFile);
+
+        return;
+
+    }
+
+    await saveProductData(
+        name,
+        price,
+        category,
+        ""
+    );
+
+}
+
+
+/* ==========================================
+   SAVE PRODUCT TO FLASK SERVER
+========================================== */
+
+async function saveProductData(
+    name,
+    price,
+    category,
+    image
+) {
+
+    const isEditing =
+        editingIndex !== -1;
+
+    const product = {
+
+        id:
+            isEditing
+                ? products[editingIndex].id
+                : String(Date.now()),
+
+        name: name,
+        price: price,
+        category: category,
+        image: image,
+        rating:
+            isEditing
+                ? (products[editingIndex].rating || 5)
+                : 5,
+        reviews:
+            isEditing
+                ? (products[editingIndex].reviews || 0)
+                : 0
+
+    };
+
+    const url =
+        isEditing
+            ? "/api/products/" + encodeURIComponent(product.id)
+            : "/api/products";
+
+    const method =
+        isEditing ? "PUT" : "POST";
+
+    try {
+
+        const response =
+            await fetch(url, {
+
+                method: method,
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify(product)
+
+            });
+
+        const result =
+            await response.json();
+
+        if (!response.ok || !result.success) {
+
+            throw new Error(
+                result.message ||
+                "The server could not save the product."
+            );
+
+        }
+
+        if (isEditing) {
+            products[editingIndex] = result.product;
+        } else {
+            products.push(result.product);
+        }
+
+        localStorage.setItem(
+            "wahabProducts",
+            JSON.stringify(products)
+        );
+
+        showNotification(
+            isEditing
+                ? "✅ Product updated successfully for all users!"
+                : "✅ Product added successfully for all users!"
+        );
+
+        editingIndex = -1;
+        editingImage = "";
+
+        document
+            .querySelector(".product-form")
+            .reset();
+
+        document
+            .getElementById("selectedImageName")
+            .textContent =
+            "No image selected";
+
+        document
+            .getElementById("saveButton")
+            .innerHTML =
+            '<i class="fa-solid fa-plus"></i> Add Product';
+
+        document
+            .getElementById("cancelButton")
+            .style.display =
+            "none";
+
+        displayProducts();
+
+    } catch (error) {
+
+        console.error(error);
+
+        showNotification(
+            "❌ " + error.message
+        );
+
+    }
+
+}
+
+
+/* ==========================================
+   DISPLAY PRODUCTS
+========================================== */
+
+function displayProducts() {
+
+    const list =
+        document.getElementById("productList");
+
+    list.innerHTML = "";
+
+    if (products.length === 0) {
+
+        list.innerHTML =
+            '<div class="empty-products">No products added yet.</div>';
+
+        return;
+
+    }
+
+    products.forEach(function(product, index) {
+
+        const item =
+            document.createElement("div");
+
+        item.className =
+            "admin-product";
+
+        let image = "";
+
+        if (product.image) {
+
+            image =
+                `<img
+                    src="${product.image}"
+                    class="admin-product-image"
+                    alt="${product.name}"
+                >`;
+
+        } else {
+
+            image =
+                `<div class="admin-product-image"></div>`;
+
+        }
+
+        item.innerHTML = `
+
+            ${image}
+
+            <div class="admin-product-info">
+
+                <h3>
+                    ${product.name}
+                </h3>
+
+                <p>
+                    💰 Rs. ${Number(product.price || 0).toLocaleString()}
+                </p>
+
+                <p>
+                    📂 ${product.category}
+                </p>
+
+            </div>
+
+            <div class="product-actions">
+
+                <button
+                    class="edit-btn"
+                    onclick="editProduct(${index})">
+
+                    <i class="fa-solid fa-pen"></i>
+
+                    Edit
+
+                </button>
+
+                <button
+                    class="delete-btn"
+                    onclick="deleteProduct(${index})">
+
+                    <i class="fa-solid fa-trash"></i>
+
+                    Delete
+
+                </button>
+
+            </div>
+
+        `;
+
+        list.appendChild(item);
+
+    });
+
+}
+
+
+/* ==========================================
+   EDIT PRODUCT
+========================================== */
+
+function editProduct(index) {
+
+    const product =
+        products[index];
+
+    if (!product) {
+        return;
+    }
+
+    document
+        .getElementById("productName")
+        .value =
+        product.name || "";
+
+    document
+        .getElementById("productPrice")
+        .value =
+        product.price || "";
+
+    document
+        .getElementById("productCategory")
+        .value =
+        product.category || "";
+
+    editingImage =
+        product.image || "";
+
+    document
+        .getElementById("productImage")
+        .value =
+        "";
+
+    document
+        .getElementById("selectedImageName")
+        .textContent =
+        product.image
+            ? "Current image will be kept unless you choose a new one."
+            : "No current image";
+
+    editingIndex =
+        index;
+
+    document
+        .getElementById("saveButton")
+        .innerHTML =
+        '<i class="fa-solid fa-save"></i> Update Product';
+
+    document
+        .getElementById("cancelButton")
+        .style.display =
+        "block";
+
+    document
+        .getElementById("productManager")
+        .scrollIntoView({
+            behavior:"smooth"
+        });
+
+}
+
+
+/* ==========================================
+   DELETE PRODUCT FROM SERVER
+========================================== */
+
+async function deleteProduct(index) {
+
+    const product =
+        products[index];
+
+    if (!product) {
+        return;
+    }
+
+    const answer =
+        confirm(
+            'Delete "' +
+            product.name +
+            '" from products?'
+        );
+
+    if (!answer) {
+        return;
+    }
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/products/" +
+                encodeURIComponent(product.id),
+                {
+                    method: "DELETE"
+                }
+            );
+
+        const result =
+            await response.json();
+
+        if (!response.ok || !result.success) {
+            throw new Error(
+                result.message ||
+                "Could not delete product."
+            );
+        }
+
+        products.splice(index, 1);
+
+        localStorage.setItem(
+            "wahabProducts",
+            JSON.stringify(products)
+        );
+
+        showNotification(
+            "🗑️ Product removed for all users!"
+        );
+
+        displayProducts();
+
+    } catch (error) {
+
+        console.error(error);
+
+        showNotification(
+            "❌ " + error.message
+        );
+
+    }
+
+}
+
+
+/* ==========================================
+   CANCEL EDIT
+========================================== */
+
+function cancelEdit() {
+
+    editingIndex =
+        -1;
+
+    editingImage =
+        "";
+
+    document
+        .querySelector(".product-form")
+        .reset();
+
+    document
+        .getElementById("selectedImageName")
+        .textContent =
+        "No image selected";
+
+    document
+        .getElementById("saveButton")
+        .innerHTML =
+        '<i class="fa-solid fa-plus"></i> Add Product';
+
+    document
+        .getElementById("cancelButton")
+        .style.display =
+        "none";
+
+}
+
+
+/* ==========================================
+   LOAD
+========================================== */
+
+loadProducts();
+
+</script></script>
+
+</body>
+</html>

@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cart - Wahab Store</title>
+
+    <link rel="stylesheet" href="/statics/style.css">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="header">
+
+    <a href="index.html" class="logo">
+        <i class="fa-solid fa-bag-shopping"></i>
+
+        <span>
+            Wahab<span>Store</span>
+        </span>
+    </a>
+
+
+    <div class="header-icons">
+
+        <div class="header-icon"
+             onclick="window.location.href='favorites.html'">
+
+            <i class="fa-solid fa-heart"></i>
+
+            <span>Wishlist</span>
+
+            <b id="favoriteCount">0</b>
+
+        </div>
+
+
+        <div class="header-icon"
+             onclick="window.location.href='admin-login.html'">
+
+            <i class="fa-solid fa-user-shield"></i>
+
+            <span>Admin</span>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     CART PAGE
+===================================================== -->
+
+<section class="cart-page">
+
+    <a href="index.html" class="back-store">
+        <i class="fa-solid fa-arrow-left"></i>
+        Back to Store
+    </a>
+
+
+    <div class="cart-title">
+
+        <h1>
+            <i class="fa-solid fa-cart-shopping"></i>
+            My Cart
+        </h1>
+
+        <p>
+            Products you have added to your cart
+        </p>
+
+    </div>
+
+
+    <!-- CART PRODUCTS -->
+
+    <div id="cartContainer"></div>
+
+
+    <!-- GRAND TOTAL -->
+
+    <div id="cartTotal" class="cart-total"></div>
+
+
+    <!-- BUY ALL -->
+
+    <div id="buyAllContainer"
+         class="buy-all-container"
+         style="display:none;">
+
+        <button type="button"
+                class="buy-all-btn"
+                onclick="buyAllCartProducts()">
+
+            <i class="fa-solid fa-bag-shopping"></i>
+
+            Buy All Products
+
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     BUY NOW POPUP
+===================================================== -->
+
+<div id="orderPopup"
+     class="order-popup"
+     onclick="closeOrderPopupOutside(event)">
+
+
+    <div class="order-popup-box"
+         onclick="event.stopPropagation()">
+
+
+        <!-- TITLE -->
+
+        <h2>
+
+            <i class="fa-solid fa-bag-shopping"></i>
+
+            Buy Now
+
+        </h2>
+
+
+
+        <!-- PRODUCT INFORMATION -->
+
+        <div id="orderProductInfo"
+             class="order-product-info">
+
+        </div>
+
+
+
+        <!-- ORDER FORM -->
+
+        <form id="orderForm"
+              onsubmit="placeCartOrder(event)">
+
+
+            <!-- NAME -->
+
+            <div class="order-form-group">
+
+                <label for="customerName">
+                    Your Name
+                </label>
+
+                <input
+                    type="text"
+                    id="customerName"
+                    required
+                    placeholder="Enter your name">
+
+            </div>
+
+
+
+            <!-- PHONE -->
+
+            <div class="order-form-group">
+
+                <label for="customerPhone">
+                    Phone Number
+                </label>
+
+                <input
+                    type="tel"
+                    id="customerPhone"
+                    required
+                    placeholder="Enter your phone number">
+
+            </div>
+
+
+
+            <!-- ADDRESS -->
+
+            <div class="order-form-group">
+
+                <label for="customerAddress">
+                    Address
+                </label>
+
+                <textarea
+                    id="customerAddress"
+                    required
+                    placeholder="Enter your complete address">
+                </textarea>
+
+            </div>
+
+
+
+            <!-- CITY -->
+
+            <div class="order-form-group">
+
+                <label for="customerCity">
+                    City
+                </label>
+
+                <input
+                    type="text"
+                    id="customerCity"
+                    required
+                    placeholder="Enter your city">
+
+            </div>
+
+
+
+            <!-- QUANTITY -->
+
+            <div class="order-form-group"
+                 id="singleQuantityGroup">
+
+                <label for="orderQuantity">
+                    Quantity
+                </label>
+
+                <input
+                    type="number"
+                    id="orderQuantity"
+                    min="1"
+                    value="1"
+                    required>
+
+            </div>
+
+
+
+            <!-- BUTTONS -->
+
+            <div class="order-popup-buttons">
+
+                <button
+                    type="submit"
+                    class="place-order-btn">
+
+                    <i class="fa-solid fa-check"></i>
+
+                    Place Order
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="close-order-btn"
+                    onclick="closeCartOrderPopup()">
+
+                    <i class="fa-solid fa-xmark"></i>
+
+                    Cancel
+
+                </button>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script src="/statics/script.js"></script>
+
+
+<script>
+
+let cartOrderProduct = null;
+
+let cartOrderAll = false;
+
+let cartOrderProducts = [];
+
+
+
+/* =====================================================
+   DISPLAY CART
+===================================================== */
+
+function displayCart() {
+
+    const container =
+        document.getElementById("cartContainer");
+
+    const totalBox =
+        document.getElementById("cartTotal");
+
+    const buyAllContainer =
+        document.getElementById("buyAllContainer");
+
+
+    let cart =
+        JSON.parse(
+            localStorage.getItem("wahabCart")
+        ) || [];
+
+
+    /* EMPTY CART */
+
+    if (cart.length === 0) {
+
+        container.innerHTML = `
+
+            <div class="cart-empty">
+
+                <i class="fa-solid fa-cart-shopping"></i>
+
+                <h2>
+                    Your Cart is Empty
+                </h2>
+
+                <p>
+                    You have not added any products yet.
+                </p>
+
+                <a href="index.html"
+                   class="back-store">
+
+                    Continue Shopping
+
+                </a>
+
+            </div>
+
+        `;
+
+
+        totalBox.innerHTML = "";
+
+
+        if (buyAllContainer) {
+
+            buyAllContainer.style.display = "none";
+
+        }
+
+
+        return;
+
+    }
+
+
+
+    container.innerHTML = "";
+
+
+    let total = 0;
+
+
+
+    /* DISPLAY PRODUCTS */
+
+    cart.forEach(function(item, index) {
+
+
+        const price =
+            Number(item.price) || 0;
+
+
+        const quantity =
+            Number(item.quantity) || 1;
+
+
+        const itemTotal =
+            price * quantity;
+
+
+        total += itemTotal;
+
+
+
+        const div =
+            document.createElement("div");
+
+
+        div.className = "cart-item";
+
+
+
+        let imageHTML = "";
+
+
+
+        if (item.image) {
+
+            imageHTML = `
+
+                <img
+                    src="${item.image}"
+                    alt="${item.name || "Product"}">
+
+            `;
+
+        }
+
+        else {
+
+            imageHTML = `
+
+                <i class="fa-solid fa-box"></i>
+
+            `;
+
+        }
+
+
+
+        div.innerHTML = `
+
+            <div class="cart-item-image">
+
+                ${imageHTML}
+
+            </div>
+
+
+
+            <div class="cart-item-info">
+
+                <h2>
+                    ${item.name || "Product"}
+                </h2>
+
+                <p>
+                    Category:
+                    ${item.category || "Other"}
+                </p>
+
+                <p class="cart-price">
+
+                    Rs.
+                    ${price.toLocaleString()}
+
+                </p>
+
+                <p class="quantity">
+
+                    Quantity:
+                    ${quantity}
+
+                </p>
+
+                <p>
+
+                    Total:
+                    Rs.
+                    ${itemTotal.toLocaleString()}
+
+                </p>
+
+            </div>
+
+
+
+            <div class="cart-buttons">
+
+                <button
+                    type="button"
+                    class="buy-now-cart"
+                    onclick="buyCartProduct(${index})">
+
+                    <i class="fa-solid fa-bolt"></i>
+
+                    Buy Now
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="remove-cart"
+                    onclick="removeCartItem(${index})">
+
+                    <i class="fa-solid fa-trash"></i>
+
+                    Remove
+
+                </button>
+
+            </div>
+
+        `;
+
+
+        container.appendChild(div);
+
+    });
+
+
+
+    /* GRAND TOTAL */
+
+    totalBox.innerHTML = `
+
+        <i class="fa-solid fa-receipt"></i>
+
+        Grand Total:
+
+        Rs.
+        ${total.toLocaleString()}
+
+    `;
+
+
+
+    if (buyAllContainer) {
+
+        buyAllContainer.style.display = "block";
+
+    }
+
+}
+
+
+
+/* =====================================================
+   BUY ONE CART PRODUCT
+===================================================== */
+
+function buyCartProduct(index) {
+
+    let cart =
+        JSON.parse(
+            localStorage.getItem("wahabCart")
+        ) || [];
+
+
+    if (
+        index < 0 ||
+        index >= cart.length
+    ) {
+
+        return;
+
+    }
+
+
+    const item = cart[index];
+
+
+    if (!item) {
+
+        return;
+
+    }
+
+
+
+    cartOrderProduct = item;
+
+    cartOrderAll = false;
+
+    cartOrderProducts = [item];
+
+
+
+    const popup =
+        document.getElementById("orderPopup");
+
+
+    const productInfo =
+        document.getElementById(
+            "orderProductInfo"
+        );
+
+
+    const quantityGroup =
+        document.getElementById(
+            "singleQuantityGroup"
+        );
+
+
+
+    if (!popup || !productInfo) {
+
+        return;
+
+    }
+
+
+
+    const price =
+        Number(item.price) || 0;
+
+
+    const quantity =
+        Number(item.quantity) || 1;
+
+
+
+    /* PRODUCT INFO */
+
+    productInfo.innerHTML = `
+
+        <strong>
+            ${item.name || "Product"}
+        </strong>
+
+        <br>
+
+        <span>
+            Price:
+            Rs.
+            ${price.toLocaleString()}
+        </span>
+
+        <br>
+
+        <span>
+            Cart Quantity:
+            ${quantity}
+        </span>
+
+    `;
+
+
+
+    const quantityInput =
+        document.getElementById(
+            "orderQuantity"
+        );
+
+
+    if (quantityInput) {
+
+        quantityInput.value = quantity;
+
+    }
+
+
+
+    if (quantityGroup) {
+
+        quantityGroup.style.display = "block";
+
+    }
+
+
+
+    popup.classList.add("active");
+
+}
+
+
+
+/* =====================================================
+   BUY ALL CART PRODUCTS
+===================================================== */
+
+function buyAllCartProducts() {
+
+    let cart =
+        JSON.parse(
+            localStorage.getItem("wahabCart")
+        ) || [];
+
+
+    if (cart.length === 0) {
+
+        alert("Your cart is empty!");
+
+        return;
+
+    }
+
+
+
+    cartOrderAll = true;
+
+    cartOrderProduct = null;
+
+    cartOrderProducts = cart.slice();
+
+
+
+    const popup =
+        document.getElementById("orderPopup");
+
+
+    const productInfo =
+        document.getElementById(
+            "orderProductInfo"
+        );
+
+
+    const quantityGroup =
+        document.getElementById(
+            "singleQuantityGroup"
+        );
+
+
+
+    if (!popup || !productInfo) {
+
+        return;
+
+    }
+
+
+
+    let grandTotal = 0;
+
+    let productsHTML = "";
+
+
+
+    cart.forEach(function(item) {
+
+
+        const price =
+            Number(item.price) || 0;
+
+
+        const quantity =
+            Number(item.quantity) || 1;
+
+
+        const itemTotal =
+            price * quantity;
+
+
+        grandTotal += itemTotal;
+
+
+
+        productsHTML += `
+
+            <div class="all-order-product">
+
+                <strong>
+                    ${item.name || "Product"}
+                </strong>
+
+                <br>
+
+                <span>
+
+                    Quantity:
+                    ${quantity}
+
+                    &nbsp; | &nbsp;
+
+                    Rs.
+                    ${itemTotal.toLocaleString()}
+
+                </span>
+
+            </div>
+
+        `;
+
+    });
+
+
+
+    productInfo.innerHTML = `
+
+        <strong>
+
+            <i class="fa-solid fa-cart-shopping"></i>
+
+            All Cart Products
+
+        </strong>
+
+
+        <div class="all-order-products">
+
+            ${productsHTML}
+
+        </div>
+
+
+        <hr>
+
+
+        <strong>
+
+            Grand Total:
+            Rs.
+            ${grandTotal.toLocaleString()}
+
+        </strong>
+
+    `;
+
+
+
+    if (quantityGroup) {
+
+        quantityGroup.style.display = "none";
+
+    }
+
+
+
+    popup.classList.add("active");
+
+}
+
+
+
+/* =====================================================
+   CLOSE POPUP
+===================================================== */
+
+function closeCartOrderPopup() {
+
+    const popup =
+        document.getElementById(
+            "orderPopup"
+        );
+
+
+    if (popup) {
+
+        popup.classList.remove("active");
+
+    }
+
+
+    cartOrderProduct = null;
+
+    cartOrderAll = false;
+
+    cartOrderProducts = [];
+
+}
+
+
+
+/* =====================================================
+   CLOSE WHEN CLICKING OUTSIDE
+===================================================== */
+
+function closeOrderPopupOutside(event) {
+
+    if (
+        event.target.id ===
+        "orderPopup"
+    ) {
+
+        closeCartOrderPopup();
+
+    }
+
+}
+
+
+
+/* =====================================================
+   PLACE ORDER
+===================================================== */
+
+function placeCartOrder(event) {
+
+    event.preventDefault();
+
+
+
+    if (
+        !cartOrderProduct &&
+        !cartOrderAll
+    ) {
+
+        return;
+
+    }
+
+
+
+    const nameInput =
+        document.getElementById(
+            "customerName"
+        );
+
+
+    const phoneInput =
+        document.getElementById(
+            "customerPhone"
+        );
+
+
+    const addressInput =
+        document.getElementById(
+            "customerAddress"
+        );
+
+
+    const cityInput =
+        document.getElementById(
+            "customerCity"
+        );
+
+
+    const quantityInput =
+        document.getElementById(
+            "orderQuantity"
+        );
+
+
+
+    const customerName =
+        nameInput.value.trim();
+
+
+    const customerPhone =
+        phoneInput.value.trim();
+
+
+    const customerAddress =
+        addressInput.value.trim();
+
+
+    const customerCity =
+        cityInput.value.trim();
+
+
+
+    if (
+        !customerName ||
+        !customerPhone ||
+        !customerAddress ||
+        !customerCity
+    ) {
+
+        alert(
+            "Please fill all order details."
+        );
+
+        return;
+
+    }
+
+
+
+    const orderId =
+        "WS-" + Date.now();
+
+
+    const orderDate =
+        new Date().toLocaleString();
+
+
+
+    let orderItems = [];
+
+    let orderTotal = 0;
+
+
+
+    /* BUY ALL */
+
+    if (cartOrderAll) {
+
+
+        cartOrderProducts.forEach(
+            function(item) {
+
+
+                const price =
+                    Number(item.price) || 0;
+
+
+                const quantity =
+                    Number(item.quantity) || 1;
+
+
+
+                orderItems.push({
+
+                    id:
+                        item.id ||
+                        item.name,
+
+                    name:
+                        item.name ||
+                        "Product",
+
+                    price:
+                        price,
+
+                    quantity:
+                        quantity
+
+                });
+
+
+
+                orderTotal +=
+                    price * quantity;
+
+            }
+        );
+
+    }
+
+
+    /* BUY ONE */
+
+    else {
+
+
+        const product =
+            cartOrderProduct;
+
+
+        const price =
+            Number(product.price) || 0;
+
+
+        const quantity =
+            Number(
+                quantityInput.value
+            ) || 1;
+
+
+
+        orderItems.push({
+
+            id:
+                product.id ||
+                product.name,
+
+            name:
+                product.name ||
+                "Product",
+
+            price:
+                price,
+
+            quantity:
+                quantity
+
+        });
+
+
+
+        orderTotal =
+            price * quantity;
+
+    }
+
+
+
+    /* NEW ORDER */
+
+    const newOrder = {
+
+        id:
+            orderId,
+
+        customer:
+            customerName,
+
+        phone:
+            customerPhone,
+
+        address:
+            customerAddress,
+
+        city:
+            customerCity,
+
+        items:
+            orderItems,
+
+        total:
+            orderTotal,
+
+        date:
+            orderDate
+
+    };
+
+
+
+    /* ORDERS */
+
+    let orders = [];
+
+
+    try {
+
+        orders =
+            JSON.parse(
+                localStorage.getItem(
+                    "wahabOrders"
+                )
+            ) || [];
+
+    }
+
+    catch (error) {
+
+        orders = [];
+
+    }
+
+
+
+    if (!Array.isArray(orders)) {
+
+        orders = [];
+
+    }
+
+
+
+    orders.push(newOrder);
+
+
+
+    localStorage.setItem(
+        "wahabOrders",
+        JSON.stringify(orders)
+    );
+
+
+
+    /* CUSTOMERS */
+
+    let customers = [];
+
+
+    try {
+
+        customers =
+            JSON.parse(
+                localStorage.getItem(
+                    "wahabCustomers"
+                )
+            ) || [];
+
+    }
+
+    catch (error) {
+
+        customers = [];
+
+    }
+
+
+
+    if (!Array.isArray(customers)) {
+
+        customers = [];
+
+    }
+
+
+
+    const existingCustomer =
+        customers.find(
+            function(customer) {
+
+                return String(
+                    customer.phone
+                ) === String(
+                    customerPhone
+                );
+
+            }
+        );
+
+
+
+    if (existingCustomer) {
+
+        existingCustomer.name =
+            customerName;
+
+        existingCustomer.orders =
+            Number(
+                existingCustomer.orders || 0
+            ) + 1;
+
+    }
+
+    else {
+
+        customers.push({
+
+            name:
+                customerName,
+
+            phone:
+                customerPhone,
+
+            orders:
+                1,
+
+            joined:
+                orderDate
+
+        });
+
+    }
+
+
+
+    localStorage.setItem(
+        "wahabCustomers",
+        JSON.stringify(customers)
+    );
+
+
+
+    const wasBuyingAll =
+        cartOrderAll;
+
+
+
+    closeCartOrderPopup();
+
+
+
+    alert(
+        "Order placed successfully!\n\n" +
+        "Order ID: " +
+        orderId
+    );
+
+
+
+    if (wasBuyingAll) {
+
+        localStorage.setItem(
+            "wahabCart",
+            JSON.stringify([])
+        );
+
+
+        displayCart();
+
+
+        if (
+            typeof updateCartCount ===
+            "function"
+        ) {
+
+            updateCartCount();
+
+        }
+
+    }
+
+}
+
+
+
+/* =====================================================
+   REMOVE CART ITEM
+===================================================== */
+
+function removeCartItem(index) {
+
+    let cart =
+        JSON.parse(
+            localStorage.getItem("wahabCart")
+        ) || [];
+
+
+    cart.splice(index, 1);
+
+
+    localStorage.setItem(
+        "wahabCart",
+        JSON.stringify(cart)
+    );
+
+
+    displayCart();
+
+
+
+    if (
+        typeof updateCartCount ===
+        "function"
+    ) {
+
+        updateCartCount();
+
+    }
+
+}
+
+
+
+/* =====================================================
+   START
+===================================================== */
+
+displayCart();
+
+</script>
+
+
+</body>
+</html>

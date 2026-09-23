@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wahab Store - Admin Login</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #111, #2b2100);
+        }
+
+        .login-box {
+            width: 380px;
+            padding: 40px;
+            background: #1c1c1c;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(255, 193, 7, 0.35);
+            text-align: center;
+        }
+
+        .login-box h1 {
+            color: #ffc107;
+            margin-bottom: 10px;
+        }
+
+        .login-box p {
+            color: #aaa;
+            margin-bottom: 30px;
+        }
+
+        .input-box {
+            margin-bottom: 18px;
+        }
+
+        .input-box input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #555;
+            border-radius: 10px;
+            background: #111;
+            color: white;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .input-box input:focus {
+            border-color: #ffc107;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: #ffc107;
+            color: #111;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .login-btn:hover {
+            background: #ffca28;
+        }
+
+        #error {
+            display: none;
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 8px;
+            background: #5c1b1b;
+            color: #ff6b6b;
+        }
+
+        .back {
+            display: block;
+            margin-top: 25px;
+            color: #aaa;
+            text-decoration: none;
+        }
+
+        .back:hover {
+            color: #ffc107;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="login-box">
+
+    <h1>🔐 Admin Login</h1>
+    <p>Wahab Store Administration</p>
+
+    <form onsubmit="loginAdmin(event)">
+
+        <div class="input-box">
+            <input
+                type="text"
+                id="username"
+                placeholder="Enter Username"
+                required
+            >
+        </div>
+
+        <div class="input-box">
+            <input
+                type="password"
+                id="password"
+                placeholder="Enter Password"
+                required
+            >
+        </div>
+
+        <button type="submit" class="login-btn">
+            Login to Admin Panel
+        </button>
+
+    </form>
+
+    <div id="error">
+        ❌ Invalid username or password!
+    </div>
+
+    <a href="index.html" class="back">
+        ← Back to Store
+    </a>
+
+</div>
+
+<script>
+
+async function loginAdmin(event) {
+
+    event.preventDefault();
+
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value;
+    const error = document.getElementById("error");
+
+    error.style.display = "none";
+
+    try {
+        const response = await fetch("/api/admin/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password })
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+            window.location.href = "/admin.html";
+            return;
+        }
+
+        error.textContent = "❌ " + (result.message || "Invalid username or password!");
+        error.style.display = "block";
+
+    } catch (err) {
+        error.textContent = "❌ Could not connect to the Python server.";
+        error.style.display = "block";
+    }
+}
+
+</script>
+
+</body>
+</html>

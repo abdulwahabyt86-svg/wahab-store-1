@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>All Products - Wahab Store</title>
+
+    <link rel="stylesheet"
+          href="/statics/style.css">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+
+<header class="header">
+
+    <div class="logo">
+        <i class="fa-solid fa-bag-shopping"></i>
+        <span>Wahab<span>Store</span></span>
+    </div>
+
+    <div class="header-icons">
+
+        <div class="header-icon"
+             onclick="goToFavorites()">
+
+            <i class="fa-regular fa-heart"></i>
+
+            <b id="favoriteCount">0</b>
+
+            <span>Wishlist</span>
+
+        </div>
+
+
+        <div class="header-icon"
+             onclick="openCart()">
+
+            <i class="fa-solid fa-cart-shopping"></i>
+
+            <b id="cartCount">0</b>
+
+            <span>Cart</span>
+
+        </div>
+
+
+        <div class="header-icon"
+             onclick="openAdmin()">
+
+            <i class="fa-solid fa-user-shield"></i>
+
+            <span>Admin</span>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<nav class="navbar">
+
+    <a href="index.html">
+        <i class="fa-solid fa-house"></i>
+        Home
+    </a>
+
+    <a href="index.html#categories">
+        Categories
+    </a>
+
+    <a href="products.html">
+        <i class="fa-solid fa-fire"></i>
+        Flash Sale
+    </a>
+
+    <a href="admin.html">
+        Admin Panel
+    </a>
+
+</nav>
+
+
+<section class="page-header">
+
+    <h1>🔥 All Flash Sale Products</h1>
+
+    <p>
+        Explore all our products
+    </p>
+
+</section>
+
+
+<section class="page-container">
+
+    <a href="index.html"
+       class="page-back">
+
+        <i class="fa-solid fa-arrow-left"></i>
+        Back to Store
+
+    </a>
+
+
+    <div class="vertical-products">
+
+
+        <!-- 1 -->
+
+        <div class="vertical-product">
+
+            <div class="product-image electronics-image">
+                <i class="fa-solid fa-mobile-screen-button"></i>
+            </div>
+
+            <div class="vertical-product-info">
+
+                <small>Electronics</small>
+
+                <h2>I phone 17 Pro Max</h2>
+
+                <p>
+                    Premium smartphone with modern features.
+                </p>
+
+                <strong>Rs. 549,999</strong>
+
+                <br>
+
+                <button
+                    onclick="addToCart('Smartphone Pro Max',49999)">
+                    <i class="fa-solid fa-cart-plus"></i>
+                    Add to Cart
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- 2 -->
+
+        <div class="vertical-product">
+
+            <div class="product-image gaming-image">
+                <i class="fa-solid fa-headset"></i>
+            </div>
+
+            <div class="vertical-product-info">
+
+                <small>Gaming</small>
+
+                <h2>Gaming Headset</h2>
+
+                <p>
+                    Enjoy an immersive gaming experience.
+                </p>
+
+                <strong>Rs. 3,499</strong>
+
+                <br>
+
+                <button
+                    onclick="addToCart('Gaming Headset',3499)">
+                    <i class="fa-solid fa-cart-plus"></i>
+                    Add to Cart
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- 3 -->
+
+        <div class="vertical-product">
+
+            <div class="product-image fashion-image">
+                <i class="fa-solid fa-shirt"></i>
+            </div>
+
+            <div class="vertical-product-info">
+
+                <small>Fashion</small>
+
+                <h2>Premium Black Hoodie</h2>
+
+                <p>
+                    Comfortable and stylish hoodie.
+                </p>
+
+                <strong>Rs. 2,249</strong>
+
+                <br>
+
+                <button
+                    onclick="addToCart('Premium Black Hoodie',2249)">
+                    <i class="fa-solid fa-cart-plus"></i>
+                    Add to Cart
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- 4 -->
+
+        <div class="vertical-product">
+
+            <div class="product-image watch-image">
+                <i class="fa-solid fa-clock"></i>
+            </div>
+
+            <div class="vertical-product-info">
+
+                <small>Electronics</small>
+
+                <h2>Smart Watch</h2>
+
+                <p>
+                    Smart and stylish watch for daily use.
+                </p>
+
+                <strong>Rs. 4,249</strong>
+
+                <br>
+
+                <button
+                    onclick="addToCart('Smart Watch',4249)">
+                    <i class="fa-solid fa-cart-plus"></i>
+                    Add to Cart
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- 5 -->
+
+        <div class="vertical-product">
+
+            <div class="product-image home-image">
+                <i class="fa-solid fa-lightbulb"></i>
+            </div>
+
+            <div class="vertical-product-info">
+
+                <small>Home</small>
+
+                <h2>Modern LED Lamp</h2>
+
+                <p>
+                    Beautiful modern lighting for your home.
+                </p>
+
+                <strong>Rs. 1,599</strong>
+
+                <br>
+
+                <button
+                    onclick="addToCart('Modern LED Lamp',1599)">
+                    <i class="fa-solid fa-cart-plus"></i>
+                    Add to Cart
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- 6 -->
+
+        <div class="vertical-product">
+
+            <div class="product-image beauty-image">
+                <i class="fa-solid fa-spray-can-sparkles"></i>
+            </div>
+
+            <div class="vertical-product-info">
+
+                <small>Beauty</small>
+
+                <h2>Beauty Care Kit</h2>
+
+                <p>
+                    Complete beauty care collection.
+                </p>
+
+                <strong>Rs. 2,699</strong>
+
+                <br>
+
+                <button
+                    onclick="addToCart('Beauty Care Kit',2699)">
+                    <i class="fa-solid fa-cart-plus"></i>
+                    Add to Cart
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- 7 -->
+
+        <div class="vertical-product">
+
+            <div class="product-image electronics-image">
+                <i class="fa-solid fa-laptop"></i>
+            </div>
+
+            <div class="vertical-product-info">
+
+                <small>Electronics</small>
+
+                <h2>Premium Laptop</h2>
+
+                <p>
+                    Powerful laptop for work and entertainment.
+                </p>
+
+                <strong>Rs. 74,999</strong>
+
+                <br>
+
+                <button
+                    onclick="addToCart('Premium Laptop',74999)">
+                    <i class="fa-solid fa-cart-plus"></i>
+                    Add to Cart
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- 8 -->
+
+        <div class="vertical-product">
+
+            <div class="product-image gaming-image">
+                <i class="fa-solid fa-keyboard"></i>
+            </div>
+
+            <div class="vertical-product-info">
+
+                <small>Gaming</small>
+
+                <h2>RGB Gaming Keyboard</h2>
+
+                <p>
+                    Stylish RGB keyboard for gamers.
+                </p>
+
+                <strong>Rs. 3,999</strong>
+
+                <br>
+
+                <button
+                    onclick="addToCart('RGB Gaming Keyboard',3999)">
+                    <i class="fa-solid fa-cart-plus"></i>
+                    Add to Cart
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- 9 -->
+
+        <div class="vertical-product">
+
+            <div class="product-image fashion-image">
+                <i class="fa-solid fa-shoe-prints"></i>
+            </div>
+
+            <div class="vertical-product-info">
+
+                <small>Fashion</small>
+
+                <h2>Premium Sneakers</h2>
+
+                <p>
+                    Comfortable premium sneakers.
+                </p>
+
+                <strong>Rs. 4,899</strong>
+
+                <br>
+
+                <button
+                    onclick="addToCart('Premium Sneakers',4899)">
+                    <i class="fa-solid fa-cart-plus"></i>
+                    Add to Cart
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- 10 -->
+
+        <div class="vertical-product">
+
+            <div class="product-image home-image">
+                <i class="fa-solid fa-mug-hot"></i>
+            </div>
+
+            <div class="vertical-product-info">
+
+                <small>Home</small>
+
+                <h2>Modern Coffee Mug</h2>
+
+                <p>
+                    Elegant mug for your daily coffee.
+                </p>
+
+                <strong>Rs. 899</strong>
+
+                <br>
+
+                <button
+                    onclick="addToCart('Modern Coffee Mug',899)">
+                    <i class="fa-solid fa-cart-plus"></i>
+                    Add to Cart
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- 11 -->
+
+        <div class="vertical-product">
+
+            <div class="product-image electronics-image">
+                <i class="fa-solid fa-volume-high"></i>
+            </div>
+
+            <div class="vertical-product-info">
+
+                <small>Electronics</small>
+
+                <h2>Wireless Speaker</h2>
+
+                <p>
+                    Portable wireless speaker with powerful sound.
+                </p>
+
+                <strong>Rs. 2,999</strong>
+
+                <br>
+
+                <button
+                    onclick="addToCart('Wireless Speaker',2999)">
+                    <i class="fa-solid fa-cart-plus"></i>
+                    Add to Cart
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- 12 -->
+
+        <div class="vertical-product">
+
+            <div class="product-image gaming-image">
+                <i class="fa-solid fa-gamepad"></i>
+            </div>
+
+            <div class="vertical-product-info">
+
+                <small>Gaming</small>
+
+                <h2>Wireless Game Controller</h2>
+
+                <p>
+                    Smooth wireless controller for gaming.
+                </p>
+
+                <strong>Rs. 3,749</strong>
+
+                <br>
+
+                <button
+                    onclick="addToCart('Wireless Game Controller',3749)">
+                    <i class="fa-solid fa-cart-plus"></i>
+                    Add to Cart
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<script src="/statics/script.js"></script>
+
+</body>
+</html>

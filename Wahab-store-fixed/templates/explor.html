@@ -1,0 +1,1634 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Explore Products - Wahab Store</title>
+
+    <!-- Your existing CSS -->
+    <link rel="stylesheet" href="/statics/style.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        /* =====================================================
+           WAHAB STORE - EXPLORE PAGE
+           ===================================================== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background:
+                radial-gradient(circle at top left, rgba(255, 193, 7, 0.12), transparent 35%),
+                radial-gradient(circle at bottom right, rgba(255, 87, 34, 0.12), transparent 35%),
+                #0f1117;
+            color: white;
+            min-height: 100vh;
+        }
+
+        /* ================= HEADER ================= */
+
+        .explore-header {
+            width: 100%;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(15, 17, 23, 0.96);
+            border-bottom: 1px solid rgba(255, 193, 7, 0.25);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(12px);
+        }
+
+        .explore-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .explore-logo i {
+            font-size: 30px;
+            color: #ffc107;
+        }
+
+        .explore-logo span span {
+            color: #ffc107;
+        }
+
+        .explore-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .top-btn {
+            border: none;
+            padding: 11px 17px;
+            border-radius: 10px;
+            background: #1d2029;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .top-btn:hover {
+            background: #ffc107;
+            color: #111;
+            transform: translateY(-2px);
+        }
+
+        .cart-number {
+            background: #ffc107;
+            color: #111;
+            padding: 2px 7px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+            margin-left: 3px;
+        }
+
+        /* ================= HERO ================= */
+
+        .explore-hero {
+            width: 100%;
+            padding: 75px 20px 55px;
+            text-align: center;
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255, 193, 7, 0.13),
+                    rgba(255, 87, 34, 0.08),
+                    rgba(15, 17, 23, 0.95)
+                );
+        }
+
+        .explore-small {
+            color: #ffc107;
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            margin-bottom: 12px;
+        }
+
+        .explore-hero h1 {
+            margin: 0;
+            font-size: clamp(38px, 7vw, 70px);
+            font-weight: 900;
+        }
+
+        .explore-hero h1 span {
+            color: #ffc107;
+        }
+
+        .explore-hero p {
+            max-width: 700px;
+            margin: 18px auto 0;
+            color: #bfc3cc;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        /* ================= SEARCH ================= */
+
+        .explore-search {
+            width: min(700px, 90%);
+            margin: 30px auto 0;
+            display: flex;
+            background: #191c24;
+            border: 1px solid rgba(255, 193, 7, 0.25);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .explore-search input {
+            flex: 1;
+            border: none;
+            outline: none;
+            background: transparent;
+            color: white;
+            padding: 16px;
+            font-size: 15px;
+        }
+
+        .explore-search button {
+            width: 60px;
+            border: none;
+            background: #ffc107;
+            color: #111;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        /* ================= PAGE CONTENT ================= */
+
+        .explore-container {
+            width: min(1100px, 92%);
+            margin: 50px auto;
+        }
+
+        .explore-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .explore-title p {
+            color: #ffc107;
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin: 0 0 8px;
+        }
+
+        .explore-title h2 {
+            margin: 0;
+            font-size: 34px;
+        }
+
+        /* ================= PRODUCT LIST ================= */
+
+        .explore-list {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .explore-product {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            padding: 20px;
+            background: rgba(25, 28, 36, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 18px;
+            transition: 0.3s;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
+        }
+
+        .explore-product:hover {
+            transform: translateY(-3px);
+            border-color: rgba(255, 193, 7, 0.5);
+            box-shadow: 0 15px 35px rgba(255, 193, 7, 0.08);
+        }
+
+        .product-icon {
+            min-width: 100px;
+            width: 100px;
+            height: 100px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255, 193, 7, 0.18),
+                    rgba(255, 87, 34, 0.12)
+                );
+            border: 1px solid rgba(255, 193, 7, 0.2);
+        }
+
+        .product-icon i {
+            font-size: 42px;
+            color: #ffc107;
+        }
+
+        .product-details {
+            flex: 1;
+        }
+
+        .product-category {
+            color: #ffc107;
+            text-transform: uppercase;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        .product-details h3 {
+            margin: 0 0 8px;
+            font-size: 22px;
+        }
+
+        .product-description {
+            margin: 0 0 10px;
+            color: #aeb3be;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .product-price {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .product-price strong {
+            color: #ffc107;
+            font-size: 20px;
+        }
+
+        .product-price del {
+            color: #777d88;
+            font-size: 13px;
+        }
+
+        .product-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+        }
+
+        .add-product-btn,
+        .favorite-product-btn {
+            min-width: 155px;
+            border: none;
+            border-radius: 10px;
+            padding: 12px 15px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .add-product-btn {
+            background: #ffc107;
+            color: #111;
+        }
+
+        .add-product-btn:hover {
+            background: #ffca2c;
+            transform: scale(1.03);
+        }
+
+        .favorite-product-btn {
+            background: #292d38;
+            color: white;
+            border: 1px solid rgba(255, 193, 7, 0.2);
+        }
+
+        .favorite-product-btn:hover {
+            background: #343945;
+        }
+
+        .favorite-product-btn.active {
+            color: #ff5570;
+            border-color: #ff5570;
+        }
+
+        /* ================= BOTTOM BUTTONS ================= */
+
+        .explore-bottom {
+            margin: 55px 0;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .back-home-btn {
+            padding: 14px 25px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: bold;
+            background: #ffc107;
+            color: #111;
+            transition: 0.3s;
+        }
+
+        .back-home-btn:hover {
+            transform: translateY(-3px);
+            background: #ffca2c;
+        }
+
+        .products-page-btn {
+            padding: 14px 25px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: bold;
+            background: #242832;
+            color: white;
+            border: 1px solid rgba(255, 193, 7, 0.25);
+            transition: 0.3s;
+        }
+
+        .products-page-btn:hover {
+            background: #ffc107;
+            color: #111;
+        }
+
+        /* ================= FOOTER ================= */
+
+        .explore-footer {
+            text-align: center;
+            padding: 35px 20px;
+            background: #0a0c10;
+            border-top: 1px solid rgba(255, 193, 7, 0.15);
+            color: #858b96;
+        }
+
+        .explore-footer strong {
+            color: #ffc107;
+        }
+
+        /* ================= NOTIFICATION ================= */
+
+        .explore-notification {
+            position: fixed;
+            top: 90px;
+            right: 25px;
+            z-index: 9999;
+            background: #191c24;
+            border: 1px solid #ffc107;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            animation: notificationIn 0.3s ease;
+        }
+
+        .explore-notification i {
+            color: #ffc107;
+            margin-right: 8px;
+        }
+
+        @keyframes notificationIn {
+            from {
+                opacity: 0;
+                transform: translateX(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 700px) {
+
+            .explore-header {
+                padding: 15px 4%;
+            }
+
+            .explore-logo {
+                font-size: 19px;
+            }
+
+            .explore-logo i {
+                font-size: 23px;
+            }
+
+            .explore-actions {
+                gap: 5px;
+            }
+
+            .top-btn {
+                padding: 9px;
+                font-size: 12px;
+            }
+
+            .top-btn span {
+                display: none;
+            }
+
+            .explore-product {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+
+            .product-icon {
+                margin: auto;
+            }
+
+            .product-price {
+                justify-content: center;
+            }
+
+            .product-buttons {
+                width: 100%;
+            }
+
+            .add-product-btn,
+            .favorite-product-btn {
+                width: 100%;
+            }
+
+            .explore-hero {
+                padding-top: 55px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =====================================================
+         HEADER
+         ===================================================== -->
+
+    <header class="explore-header">
+
+        <div class="explore-logo">
+            <i class="fa-solid fa-bag-shopping"></i>
+
+            <span>
+                Wahab<span>Store</span>
+            </span>
+        </div>
+
+        <div class="explore-actions">
+
+            <button class="top-btn" onclick="goHome()">
+                <i class="fa-solid fa-house"></i>
+                <span> Home</span>
+            </button>
+
+            <button class="top-btn" onclick="openExploreCart()">
+                <i class="fa-solid fa-cart-shopping"></i>
+
+                <span> Cart</span>
+
+                <b class="cart-number" id="exploreCartCount">0</b>
+            </button>
+
+            <button class="top-btn" onclick="goAdmin()">
+                <i class="fa-solid fa-user-shield"></i>
+                <span> Admin</span>
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         HERO
+         ===================================================== -->
+
+    <section class="explore-hero">
+
+        <div class="explore-small">
+            WAHAB STORE
+        </div>
+
+        <h1>
+            Explore <span>Products</span>
+        </h1>
+
+        <p>
+            Discover our collection of quality products,
+            amazing deals and useful items — all in one place.
+        </p>
+
+        <div class="explore-search">
+
+            <input
+                type="text"
+                id="exploreSearch"
+                placeholder="Search products..."
+                onkeyup="searchExploreProducts()">
+
+            <button onclick="searchExploreProducts()">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         PRODUCTS
+         ===================================================== -->
+
+    <main class="explore-container">
+
+        <div class="explore-title">
+
+            <p>
+                OUR COLLECTION
+            </p>
+
+            <h2>
+                All Products
+            </h2>
+
+        </div>
+
+
+        <div class="explore-list" id="exploreProductList">
+
+
+            <!-- PRODUCT 1 -->
+
+            <div class="explore-product"
+                 data-name="I phone 17 Pro Max">
+
+                <div class="product-icon">
+                    <i class="fa-solid fa-mobile-screen-button"></i>
+                </div>
+
+                <div class="product-details">
+
+                    <div class="product-category">
+                        Electronics
+                    </div>
+
+                    <h3>
+                        Smartphone Pro Max
+                    </h3>
+
+                    <p class="product-description">
+                        Modern smartphone with powerful performance
+                        and premium design.
+                    </p>
+
+                    <div class="product-price">
+                        <strong>Rs.549,999</strong>
+                        <del>Rs. 60,0000</del>
+                    </div>
+
+                </div>
+
+                <div class="product-buttons">
+
+                    <button
+                        class="add-product-btn"
+                        onclick="exploreAddToCart('Smartphone Pro Max', 49999)">
+
+                        <i class="fa-solid fa-cart-plus"></i>
+                        Add to Cart
+
+                    </button>
+
+                    <button
+                        class="favorite-product-btn"
+                        onclick="exploreFavorite(this, 'Smartphone Pro Max')">
+
+                        <i class="fa-regular fa-heart"></i>
+                        Favourite
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- PRODUCT 2 -->
+
+            <div class="explore-product"
+                 data-name="Gaming Headset">
+
+                <div class="product-icon">
+                    <i class="fa-solid fa-headphones"></i>
+                </div>
+
+                <div class="product-details">
+
+                    <div class="product-category">
+                        Gaming
+                    </div>
+
+                    <h3>
+                        Gaming Headset
+                    </h3>
+
+                    <p class="product-description">
+                        Comfortable gaming headset with immersive
+                        sound and stylish design.
+                    </p>
+
+                    <div class="product-price">
+                        <strong>Rs. 3,499</strong>
+                        <del>Rs. 4,500</del>
+                    </div>
+
+                </div>
+
+                <div class="product-buttons">
+
+                    <button
+                        class="add-product-btn"
+                        onclick="exploreAddToCart('Gaming Headset', 3499)">
+
+                        <i class="fa-solid fa-cart-plus"></i>
+                        Add to Cart
+
+                    </button>
+
+                    <button
+                        class="favorite-product-btn"
+                        onclick="exploreFavorite(this, 'Gaming Headset')">
+
+                        <i class="fa-regular fa-heart"></i>
+                        Favourite
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- PRODUCT 3 -->
+
+            <div class="explore-product"
+                 data-name="Premium Black Hoodie">
+
+                <div class="product-icon">
+                    <i class="fa-solid fa-shirt"></i>
+                </div>
+
+                <div class="product-details">
+
+                    <div class="product-category">
+                        Fashion
+                    </div>
+
+                    <h3>
+                        Premium Black Hoodie
+                    </h3>
+
+                    <p class="product-description">
+                        Comfortable premium hoodie with a modern
+                        and attractive look.
+                    </p>
+
+                    <div class="product-price">
+                        <strong>Rs. 2,249</strong>
+                        <del>Rs. 3,000</del>
+                    </div>
+
+                </div>
+
+                <div class="product-buttons">
+
+                    <button
+                        class="add-product-btn"
+                        onclick="exploreAddToCart('Premium Black Hoodie', 2249)">
+
+                        <i class="fa-solid fa-cart-plus"></i>
+                        Add to Cart
+
+                    </button>
+
+                    <button
+                        class="favorite-product-btn"
+                        onclick="exploreFavorite(this, 'Premium Black Hoodie')">
+
+                        <i class="fa-regular fa-heart"></i>
+                        Favourite
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- PRODUCT 4 -->
+
+            <div class="explore-product"
+                 data-name="Smart Watch">
+
+                <div class="product-icon">
+                    <i class="fa-solid fa-clock"></i>
+                </div>
+
+                <div class="product-details">
+
+                    <div class="product-category">
+                        Electronics
+                    </div>
+
+                    <h3>
+                        Smart Watch
+                    </h3>
+
+                    <p class="product-description">
+                        Stylish smart watch suitable for everyday
+                        use and active lifestyles.
+                    </p>
+
+                    <div class="product-price">
+                        <strong>Rs. 4,249</strong>
+                        <del>Rs. 5,500</del>
+                    </div>
+
+                </div>
+
+                <div class="product-buttons">
+
+                    <button
+                        class="add-product-btn"
+                        onclick="exploreAddToCart('Smart Watch', 4249)">
+
+                        <i class="fa-solid fa-cart-plus"></i>
+                        Add to Cart
+
+                    </button>
+
+                    <button
+                        class="favorite-product-btn"
+                        onclick="exploreFavorite(this, 'Smart Watch')">
+
+                        <i class="fa-regular fa-heart"></i>
+                        Favourite
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- PRODUCT 5 -->
+
+            <div class="explore-product"
+                 data-name="Modern LED Lamp">
+
+                <div class="product-icon">
+                    <i class="fa-solid fa-lightbulb"></i>
+                </div>
+
+                <div class="product-details">
+
+                    <div class="product-category">
+                        Home
+                    </div>
+
+                    <h3>
+                        Modern LED Lamp
+                    </h3>
+
+                    <p class="product-description">
+                        Beautiful modern LED lamp for your room,
+                        desk or home decoration.
+                    </p>
+
+                    <div class="product-price">
+                        <strong>Rs. 1,599</strong>
+                        <del>Rs. 2,200</del>
+                    </div>
+
+                </div>
+
+                <div class="product-buttons">
+
+                    <button
+                        class="add-product-btn"
+                        onclick="exploreAddToCart('Modern LED Lamp', 1599)">
+
+                        <i class="fa-solid fa-cart-plus"></i>
+                        Add to Cart
+
+                    </button>
+
+                    <button
+                        class="favorite-product-btn"
+                        onclick="exploreFavorite(this, 'Modern LED Lamp')">
+
+                        <i class="fa-regular fa-heart"></i>
+                        Favourite
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- PRODUCT 6 -->
+
+            <div class="explore-product"
+                 data-name="Beauty Care Kit">
+
+                <div class="product-icon">
+                    <i class="fa-solid fa-spa"></i>
+                </div>
+
+                <div class="product-details">
+
+                    <div class="product-category">
+                        Beauty
+                    </div>
+
+                    <h3>
+                        Beauty Care Kit
+                    </h3>
+
+                    <p class="product-description">
+                        A useful beauty care collection for
+                        everyday personal care.
+                    </p>
+
+                    <div class="product-price">
+                        <strong>Rs. 2,699</strong>
+                        <del>Rs. 3,500</del>
+                    </div>
+
+                </div>
+
+                <div class="product-buttons">
+
+                    <button
+                        class="add-product-btn"
+                        onclick="exploreAddToCart('Beauty Care Kit', 2699)">
+
+                        <i class="fa-solid fa-cart-plus"></i>
+                        Add to Cart
+
+                    </button>
+
+                    <button
+                        class="favorite-product-btn"
+                        onclick="exploreFavorite(this, 'Beauty Care Kit')">
+
+                        <i class="fa-regular fa-heart"></i>
+                        Favourite
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- PRODUCT 7 -->
+
+            <div class="explore-product"
+                 data-name="Premium Laptop">
+
+                <div class="product-icon">
+                    <i class="fa-solid fa-laptop"></i>
+                </div>
+
+                <div class="product-details">
+
+                    <div class="product-category">
+                        Electronics
+                    </div>
+
+                    <h3>
+                        Premium Laptop
+                    </h3>
+
+                    <p class="product-description">
+                        Powerful laptop for study, work and
+                        everyday productivity.
+                    </p>
+
+                    <div class="product-price">
+                        <strong>Rs. 74,999</strong>
+                        <del>Rs. 90,000</del>
+                    </div>
+
+                </div>
+
+                <div class="product-buttons">
+
+                    <button
+                        class="add-product-btn"
+                        onclick="exploreAddToCart('Premium Laptop', 74999)">
+
+                        <i class="fa-solid fa-cart-plus"></i>
+                        Add to Cart
+
+                    </button>
+
+                    <button
+                        class="favorite-product-btn"
+                        onclick="exploreFavorite(this, 'Premium Laptop')">
+
+                        <i class="fa-regular fa-heart"></i>
+                        Favourite
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- PRODUCT 8 -->
+
+            <div class="explore-product"
+                 data-name="RGB Gaming Keyboard">
+
+                <div class="product-icon">
+                    <i class="fa-solid fa-keyboard"></i>
+                </div>
+
+                <div class="product-details">
+
+                    <div class="product-category">
+                        Gaming
+                    </div>
+
+                    <h3>
+                        RGB Gaming Keyboard
+                    </h3>
+
+                    <p class="product-description">
+                        Stylish RGB keyboard designed for gaming
+                        and comfortable typing.
+                    </p>
+
+                    <div class="product-price">
+                        <strong>Rs. 3,999</strong>
+                        <del>Rs. 5,000</del>
+                    </div>
+
+                </div>
+
+                <div class="product-buttons">
+
+                    <button
+                        class="add-product-btn"
+                        onclick="exploreAddToCart('RGB Gaming Keyboard', 3999)">
+
+                        <i class="fa-solid fa-cart-plus"></i>
+                        Add to Cart
+
+                    </button>
+
+                    <button
+                        class="favorite-product-btn"
+                        onclick="exploreFavorite(this, 'RGB Gaming Keyboard')">
+
+                        <i class="fa-regular fa-heart"></i>
+                        Favourite
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- PRODUCT 9 -->
+
+            <div class="explore-product"
+                 data-name="Premium Sneakers">
+
+                <div class="product-icon">
+                    <i class="fa-solid fa-shoe-prints"></i>
+                </div>
+
+                <div class="product-details">
+
+                    <div class="product-category">
+                        Fashion
+                    </div>
+
+                    <h3>
+                        Premium Sneakers
+                    </h3>
+
+                    <p class="product-description">
+                        Comfortable and stylish sneakers suitable
+                        for everyday use.
+                    </p>
+
+                    <div class="product-price">
+                        <strong>Rs. 4,899</strong>
+                        <del>Rs. 6,000</del>
+                    </div>
+
+                </div>
+
+                <div class="product-buttons">
+
+                    <button
+                        class="add-product-btn"
+                        onclick="exploreAddToCart('Premium Sneakers', 4899)">
+
+                        <i class="fa-solid fa-cart-plus"></i>
+                        Add to Cart
+
+                    </button>
+
+                    <button
+                        class="favorite-product-btn"
+                        onclick="exploreFavorite(this, 'Premium Sneakers')">
+
+                        <i class="fa-regular fa-heart"></i>
+                        Favourite
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- PRODUCT 10 -->
+
+            <div class="explore-product"
+                 data-name="Modern Coffee Mug">
+
+                <div class="product-icon">
+                    <i class="fa-solid fa-mug-hot"></i>
+                </div>
+
+                <div class="product-details">
+
+                    <div class="product-category">
+                        Home
+                    </div>
+
+                    <h3>
+                        Modern Coffee Mug
+                    </h3>
+
+                    <p class="product-description">
+                        Beautiful modern coffee mug for home,
+                        office and everyday use.
+                    </p>
+
+                    <div class="product-price">
+                        <strong>Rs. 899</strong>
+                        <del>Rs. 1,200</del>
+                    </div>
+
+                </div>
+
+                <div class="product-buttons">
+
+                    <button
+                        class="add-product-btn"
+                        onclick="exploreAddToCart('Modern Coffee Mug', 899)">
+
+                        <i class="fa-solid fa-cart-plus"></i>
+                        Add to Cart
+
+                    </button>
+
+                    <button
+                        class="favorite-product-btn"
+                        onclick="exploreFavorite(this, 'Modern Coffee Mug')">
+
+                        <i class="fa-regular fa-heart"></i>
+                        Favourite
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- PRODUCT 11 -->
+
+            <div class="explore-product"
+                 data-name="Wireless Speaker">
+
+                <div class="product-icon">
+                    <i class="fa-solid fa-volume-high"></i>
+                </div>
+
+                <div class="product-details">
+
+                    <div class="product-category">
+                        Electronics
+                    </div>
+
+                    <h3>
+                        Wireless Speaker
+                    </h3>
+
+                    <p class="product-description">
+                        Portable wireless speaker with clear sound
+                        and modern design.
+                    </p>
+
+                    <div class="product-price">
+                        <strong>Rs. 2,999</strong>
+                        <del>Rs. 3,650</del>
+                    </div>
+
+                </div>
+
+                <div class="product-buttons">
+
+                    <button
+                        class="add-product-btn"
+                        onclick="exploreAddToCart('Wireless Speaker', 2999)">
+
+                        <i class="fa-solid fa-cart-plus"></i>
+                        Add to Cart
+
+                    </button>
+
+                    <button
+                        class="favorite-product-btn"
+                        onclick="exploreFavorite(this, 'Wireless Speaker')">
+
+                        <i class="fa-regular fa-heart"></i>
+                        Favourite
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- PRODUCT 12 -->
+
+            <div class="explore-product"
+                 data-name="Wireless Game Controller">
+
+                <div class="product-icon">
+                    <i class="fa-solid fa-gamepad"></i>
+                </div>
+
+                <div class="product-details">
+
+                    <div class="product-category">
+                        Gaming
+                    </div>
+
+                    <h3>
+                        Wireless Game Controller
+                    </h3>
+
+                    <p class="product-description">
+                        Wireless controller with comfortable controls
+                        for an enjoyable gaming experience.
+                    </p>
+
+                    <div class="product-price">
+                        <strong>Rs. 3,749</strong>
+                        <del>Rs. 5,000</del>
+                    </div>
+
+                </div>
+
+                <div class="product-buttons">
+
+                    <button
+                        class="add-product-btn"
+                        onclick="exploreAddToCart('Wireless Game Controller', 3749)">
+
+                        <i class="fa-solid fa-cart-plus"></i>
+                        Add to Cart
+
+                    </button>
+
+                    <button
+                        class="favorite-product-btn"
+                        onclick="exploreFavorite(this, 'Wireless Game Controller')">
+
+                        <i class="fa-regular fa-heart"></i>
+                        Favourite
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             BOTTOM BUTTONS
+             ===================================================== -->
+
+        <div class="explore-bottom">
+
+            <a href="index.html" class="back-home-btn">
+                <i class="fa-solid fa-house"></i>
+                Back to Home
+            </a>
+
+            <a href="products.html" class="products-page-btn">
+                <i class="fa-solid fa-box"></i>
+                View Products Page
+            </a>
+
+        </div>
+
+    </main>
+
+
+    <!-- =====================================================
+         FOOTER
+         ===================================================== -->
+
+    <footer class="explore-footer">
+
+        <p>
+            © 2026 <strong>Wahab Store</strong>
+            — Quality Products. Amazing Prices.
+        </p>
+
+    </footer>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+         ===================================================== -->
+
+    <script>
+
+        /* ============================================
+           CART
+           ============================================ */
+
+        let exploreCart =
+            JSON.parse(localStorage.getItem("wahabCart")) || [];
+
+
+        function updateExploreCartCount() {
+
+            let total = 0;
+
+            exploreCart.forEach(function (item) {
+
+                total += Number(item.quantity) || 1;
+
+            });
+
+            const count =
+                document.getElementById("exploreCartCount");
+
+            if (count) {
+                count.innerText = total;
+            }
+        }
+
+
+        /* ============================================
+           ADD TO CART
+           ============================================ */
+
+        function exploreAddToCart(name, price) {
+
+            const existing =
+                exploreCart.find(function (item) {
+
+                    return item.name === name;
+
+                });
+
+
+            if (existing) {
+
+                existing.quantity =
+                    Number(existing.quantity) + 1;
+
+            } else {
+
+                exploreCart.push({
+
+                    name: name,
+
+                    price: Number(price),
+
+                    quantity: 1
+
+                });
+
+            }
+
+
+            localStorage.setItem(
+                "wahabCart",
+                JSON.stringify(exploreCart)
+            );
+
+
+            updateExploreCartCount();
+
+
+            showExploreNotification(
+                "✅ " + name + " added to cart successfully!"
+            );
+        }
+
+
+        /* ============================================
+           FAVOURITES
+           ============================================ */
+
+        function exploreFavorite(button, name) {
+
+            let favourites =
+                JSON.parse(
+                    localStorage.getItem("wahabFavourites")
+                ) || [];
+
+
+            const index =
+                favourites.indexOf(name);
+
+
+            const icon =
+                button.querySelector("i");
+
+
+            if (index === -1) {
+
+                favourites.push(name);
+
+                button.classList.add("active");
+
+                icon.classList.remove("fa-regular");
+
+                icon.classList.add("fa-solid");
+
+                showExploreNotification(
+                    "❤️ " + name + " added to favourites!"
+                );
+
+            } else {
+
+                favourites.splice(index, 1);
+
+                button.classList.remove("active");
+
+                icon.classList.remove("fa-solid");
+
+                icon.classList.add("fa-regular");
+
+                showExploreNotification(
+                    name + " removed from favourites."
+                );
+            }
+
+
+            localStorage.setItem(
+                "wahabFavourites",
+                JSON.stringify(favourites)
+            );
+        }
+
+
+        /* ============================================
+           SEARCH
+           ============================================ */
+
+        function searchExploreProducts() {
+
+            const input =
+                document.getElementById("exploreSearch");
+
+            const search =
+                input.value.toLowerCase().trim();
+
+
+            const products =
+                document.querySelectorAll(".explore-product");
+
+
+            products.forEach(function (product) {
+
+                const name =
+                    product.getAttribute("data-name")
+                    .toLowerCase();
+
+
+                if (name.includes(search)) {
+
+                    product.style.display = "flex";
+
+                } else {
+
+                    product.style.display = "none";
+
+                }
+
+            });
+        }
+
+
+        /* ============================================
+           HOME
+           ============================================ */
+
+        function goHome() {
+
+            window.location.href = "index.html";
+
+        }
+
+
+        /* ============================================
+           ADMIN
+           ============================================ */
+
+        function goAdmin() {
+
+            window.location.href = "admin.html";
+
+        }
+
+
+        /* ============================================
+           CART BUTTON
+           ============================================ */
+
+        function openExploreCart() {
+
+            window.location.href = "index.html";
+
+        }
+
+
+        /* ============================================
+           NOTIFICATION
+           ============================================ */
+
+        function showExploreNotification(message) {
+
+            const old =
+                document.querySelector(
+                    ".explore-notification"
+                );
+
+            if (old) {
+                old.remove();
+            }
+
+
+            const notification =
+                document.createElement("div");
+
+            notification.className =
+                "explore-notification";
+
+
+            notification.innerHTML = `
+                <i class="fa-solid fa-circle-check"></i>
+                ${message}
+            `;
+
+
+            document.body.appendChild(notification);
+
+
+            setTimeout(function () {
+
+                notification.style.opacity = "0";
+
+                notification.style.transform =
+                    "translateX(40px)";
+
+                notification.style.transition =
+                    "0.3s";
+
+
+                setTimeout(function () {
+
+                    notification.remove();
+
+                }, 300);
+
+            }, 2500);
+        }
+
+
+        /* ============================================
+           LOAD CART COUNT
+           ============================================ */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                updateExploreCartCount();
+
+
+                /* Restore favourite buttons */
+
+                const favourites =
+                    JSON.parse(
+                        localStorage.getItem(
+                            "wahabFavourites"
+                        )
+                    ) || [];
+
+
+                document
+                    .querySelectorAll(
+                        ".favorite-product-btn"
+                    )
+                    .forEach(function (button) {
+
+                        const onclick =
+                            button.getAttribute(
+                                "onclick"
+                            );
+
+
+                        if (!onclick) return;
+
+
+                        const match =
+                            onclick.match(
+                                /'([^']+)'/
+                            );
+
+
+                        if (!match) return;
+
+
+                        const name =
+                            match[1];
+
+
+                        if (
+                            favourites.includes(name)
+                        ) {
+
+                            button.classList.add(
+                                "active"
+                            );
+
+
+                            const icon =
+                                button.querySelector(
+                                    "i"
+                                );
+
+
+                            if (icon) {
+
+                                icon.classList.remove(
+                                    "fa-regular"
+                                );
+
+                                icon.classList.add(
+                                    "fa-solid"
+                                );
+                            }
+                        }
+
+                    });
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>
